@@ -20,4 +20,4 @@ jobs:
       script: ./mvnw clean compile
     - stage: test
       name: "Test"
-      script: ./mvnw jacoco:prepare-agent test -Pci -Dsonar.projectKey=CaseStudy-JobManagement_jm-service  -Dsonar.host.url=https://sonarcloud.io
+      script: ./mvnw jacoco:prepare-agent test -Pci-sonar -Dsonar.projectKey=CaseStudy-JobManagement_jm-service  -Dsonar.host.url=https://sonarcloud.io
