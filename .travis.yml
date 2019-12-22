@@ -1,5 +1,9 @@
 language: java
 
+jdk: oraclejdk8
+
+os: linux
+
 before_install:
   - chmod +x mvnw
 
@@ -7,8 +11,17 @@ cache:
   directories:
     - $HOME/.m2
 
+addons:
+  sonarcloud:
+    organization: "cs-jms"
+    token:
+      secure: $SONAR_TOKEN
+
 jobs:
   include:
-    - stage: Build
+    - stage: build
       name: "Build"
-      script: ./mvnw clean package
+      script: ./mvnw clean compile
+    - stage: test
+      name: "Test"
+      script: ./mvnw jacoco:prepare-agent test -Pci -Dsonar.projectKey=CaseStudy-JobManagement_jm-service  -Dsonar.host.url=https://sonarcloud.io
