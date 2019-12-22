@@ -1,13 +1,13 @@
-package com.optile.cs.jmservice;
+package com.optile.cs;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class JmServiceApplicationTests {
+class JobManagementServiceApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+    @Test
+    void contextLoads() {
+    }
 
 }

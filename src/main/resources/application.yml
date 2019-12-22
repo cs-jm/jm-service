@@ -1,0 +1,27 @@
+spring:
+  profiles:
+    active: "dev"
+
+server:
+  servlet:
+    contextPath: /api
+
+---
+
+spring:
+  profiles: dev
+app:
+  db:
+    name: job
+    host: localhost
+    port: 27107
+
+---
+
+spring:
+  profiles: prod
+app:
+  db:
+    name: job
+#    host: {ip}
+#    port: {port}
