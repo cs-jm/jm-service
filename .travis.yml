@@ -10,4 +10,5 @@ cache:
 jobs:
   include:
     - stage: Build
+      name: "Build"
       script: ./mvnw clean package
