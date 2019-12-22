@@ -21,3 +21,10 @@ jobs:
     - stage: test
       name: "Test"
       script: ./mvnw jacoco:prepare-agent verify -Pci-sonar -Dsonar.projectKey=CaseStudy-JobManagement_jm-service  -Dsonar.host.url=https://sonarcloud.io
+    - stage: deploy
+      name: "Deploy"
+      deploy:
+        provider: heroku
+        api-key:
+          secure: $HEROKU_TOKEN
+        app: jm-service
