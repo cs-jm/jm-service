@@ -1,0 +1,13 @@
+language: java
+
+before_install:
+  - chmod +x mvnw
+
+cache:
+  directories:
+    - $HOME/.m2
+
+jobs:
+  include:
+    - stage: Build
+      script: ./mvnw clean package
