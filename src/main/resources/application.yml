@@ -11,6 +11,7 @@ server:
 spring:
   profiles: dev
 app:
+  jobStore: ".store"
   db:
     name: job
     host: localhost
@@ -21,6 +22,7 @@ app:
 spring:
   profiles: prod
 app:
+  jobStore: ".store"
   db:
     name: job
 #    host: {ip}

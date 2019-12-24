@@ -2,6 +2,8 @@ package com.optile.cs.config;
 
 import com.mongodb.client.MongoClients;
 import com.optile.cs.AppSetting;
+import com.optile.cs.job.executor.SimpleJarExecutor;
+import com.optile.cs.job.model.JobType;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.IMongodConfig;
 import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
@@ -14,6 +16,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 @Configuration
 public class AppConfig {
@@ -36,6 +40,13 @@ public class AppConfig {
                                 .concat(":")
                                 .concat(appSetting.getDb().getPort().toString()))
                 , appSetting.getDb().getName());
+    }
+
+    @Bean
+    public Map<JobType, Class> executors(){
+        return new HashMap(){{
+            put(JobType.SIMPLE_JAR, SimpleJarExecutor.class);
+        }};
     }
 
     @Bean

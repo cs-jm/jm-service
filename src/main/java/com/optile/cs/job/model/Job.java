@@ -9,4 +9,5 @@ public class Job {
     private String id;
     private JobType type;
     private JobStatus status;
+    private String fileLocation;
 }

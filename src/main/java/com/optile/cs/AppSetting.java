@@ -7,11 +7,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 @ConfigurationProperties("app")
-@Getter @Setter
+@Getter
+@Setter
 public class AppSetting {
     private DB db;
+    private String jobStore;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     public static class DB {
         private String name;
         private String host;

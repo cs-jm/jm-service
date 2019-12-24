@@ -23,7 +23,7 @@ public class JobController {
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(jobService.submitJob(jobType))
+                .buildAndExpand(jobService.submitJob(file, jobType))
                 .toUri();
 
         return ResponseEntity.created(uri).build();
