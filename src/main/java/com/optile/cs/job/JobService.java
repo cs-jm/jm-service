@@ -1,17 +1,14 @@
 package com.optile.cs.job;
 
-import com.optile.cs.error.AppErrorCode;
-import com.optile.cs.error.AppException;
-import com.optile.cs.job.model.Job;
-import com.optile.cs.job.model.JobStatus;
-import com.optile.cs.job.model.JobType;
+import com.optile.cs.job.model.*;
 import com.optile.cs.job.service.SchedulerService;
 import com.optile.cs.job.service.StorageService;
-import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,30 +23,32 @@ public class JobService {
     @Autowired
     private JobRepository jobRepository;
 
-    public String submitJob(MultipartFile file, JobType jobType) {
+    public String submitJob(MultipartFile file, JobType jobType, ExecutionType executionType, Date date, Integer priority) {
         String jobId = UUID.randomUUID().toString();
-        String jobFileLocation = storageService.saveFile(file, jobId);
 
         Job job = Job
                 .builder()
                 .id(jobId)
-                .fileLocation(jobFileLocation)
+                .fileLocation(
+                        storageService.saveFile(file, jobId))
                 .status(JobStatus.QUEUED)
                 .type(jobType)
+                .schedule(
+                        new Schedule(executionType, date))
+                .priority(priority)
                 .build();
 
-        try {
-            schedulerService.scheduleJob(job);
-        }catch (SchedulerException schedulerException){
-            throw new AppException(AppErrorCode.ERROR_SCHEDULE_JOB);
-        }
+        schedulerService
+                .scheduleJob(job);
 
         return jobRepository.create(job);
-
-
     }
 
     public Job retrieveJob(String id) {
         return jobRepository.findByJobId(id);
+    }
+
+    public List<Job> retrieveAllJobs() {
+        return jobRepository.findAllJobs();
     }
 }

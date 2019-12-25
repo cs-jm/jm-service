@@ -20,8 +20,8 @@ public class StorageService {
     private String jobStore;
 
     @PostConstruct
-    private void setupStore() throws IOException{
-        if(!Files.isDirectory(Paths.get(jobStore)))
+    private void setupStore() throws IOException {
+        if (!Files.isDirectory(Paths.get(jobStore)))
             Files.createDirectories(Paths.get(jobStore));
     }
 
@@ -41,6 +41,6 @@ public class StorageService {
     }
 
     private String getJobStorePath(String jobId, String fileExtension) {
-            return jobStore + "/" + jobId + "." + fileExtension;
+        return jobStore + "/" + jobId + "." + fileExtension;
     }
 }

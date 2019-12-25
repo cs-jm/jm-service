@@ -43,8 +43,8 @@ public class AppConfig {
     }
 
     @Bean
-    public Map<JobType, Class> executors(){
-        return new HashMap(){{
+    public Map<JobType, Class> executors() {
+        return new HashMap() {{
             put(JobType.SIMPLE_JAR, SimpleJarExecutor.class);
         }};
     }
