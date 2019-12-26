@@ -26,8 +26,8 @@ public class AppConfig {
 
     private void startDevMongoDBServer() throws IOException {
         IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION)
-                                                              .net(new Net(appSetting.getDb().getHost(), appSetting.getDb().getPort(), false))
-                                                              .build();
+                .net(new Net(appSetting.getDb().getHost(), appSetting.getDb().getPort(), false))
+                .build();
 
         MongodStarter.getDefaultInstance().prepare(mongodConfig).start();
     }

@@ -1,10 +1,9 @@
 package com.optile.cs.job.service;
 
-import com.optile.cs.error.AppErrorCode;
 import com.optile.cs.error.AppException;
-import com.optile.cs.job.model.ExecutionType;
 import com.optile.cs.job.model.Job;
 import com.optile.cs.job.model.JobType;
+import com.optile.cs.job.util.ResponseErrorCode;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -29,7 +28,7 @@ public class SchedulerService {
                     .getScheduler()
                     .scheduleJob(jobDetail, getTrigger(jobDetail, job));
         } catch (SchedulerException schedulerException) {
-            throw new AppException(AppErrorCode.ERROR_SCHEDULE_JOB);
+            throw new AppException(ResponseErrorCode.RESPONSE_ERROR_003);
         }
     }
 
@@ -40,10 +39,15 @@ public class SchedulerService {
                 .withIdentity(job.getId())
                 .withPriority(job.getPriority());
 
-        if (job.getSchedule().getExecutionType().equals(ExecutionType.IMMEDIATE))
-            triggerBuilder.startNow();
-        else
-            triggerBuilder.startAt(job.getSchedule().getSchedule());
+        switch (job.getSchedule().getExecutionType()) {
+            case SCHEDULED:
+                triggerBuilder.startAt(job.getSchedule().getSchedule());
+                break;
+            case IMMEDIATE:
+            default:
+                triggerBuilder.startNow();
+                break;
+        }
 
         return triggerBuilder.build();
     }

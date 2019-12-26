@@ -1,19 +1,19 @@
 package com.optile.cs.job.executor;
 
+import com.optile.cs.job.error.JobProcessingException;
 import com.optile.cs.job.model.Job;
+import com.optile.cs.job.util.MessageCode;
 
 import java.io.IOException;
 
 public class SimpleJarJobExecutor extends JobExecutor {
     @Override
-    public void execute(Job job) {
-        int error = 0;
+    public void execute(Job job) throws JobProcessingException {
         try {
-         error =   new ProcessBuilder().command("Java", "-Jar", job.getFileLocation()).start().waitFor();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (new ProcessBuilder().command("java", "-jar", job.getFileLocation()).start().waitFor() != 0)
+                throw new JobProcessingException(job.getId(), MessageCode.FAILED_EXECUTION);
+        } catch (InterruptedException | IOException exception) {
+            throw new JobProcessingException(job.getId(), MessageCode.FAILED_EXECUTION, exception);
         }
     }
 }

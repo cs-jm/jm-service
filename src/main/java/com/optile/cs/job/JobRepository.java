@@ -29,7 +29,7 @@ public class JobRepository {
         this.mongoTemplate
                 .findAndModify(
                         Query.query(Criteria.where("job.id").is(id)),
-                        Update.update("status", jobStatus),
+                        Update.update("job.status", jobStatus),
                         JobDocument.class);
     }
 
