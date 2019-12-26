@@ -2,10 +2,12 @@ package com.optile.cs.job;
 
 import com.optile.cs.job.model.Job;
 import com.optile.cs.job.model.JobDocument;
+import com.optile.cs.job.model.JobStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,6 +23,14 @@ public class JobRepository {
                 .insert(new JobDocument(job))
                 .getJob()
                 .getId();
+    }
+
+    public void updateJobStatus(String id, JobStatus jobStatus) {
+        this.mongoTemplate
+                .findAndModify(
+                        Query.query(Criteria.where("job.id").is(id)),
+                        Update.update("status", jobStatus),
+                        JobDocument.class);
     }
 
     public Job findByJobId(String id) {

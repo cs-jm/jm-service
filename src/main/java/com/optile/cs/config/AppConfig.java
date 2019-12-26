@@ -2,7 +2,7 @@ package com.optile.cs.config;
 
 import com.mongodb.client.MongoClients;
 import com.optile.cs.AppSetting;
-import com.optile.cs.job.executor.SimpleJarExecutor;
+import com.optile.cs.job.executor.SimpleJarJobExecutor;
 import com.optile.cs.job.model.JobType;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.IMongodConfig;
@@ -45,7 +45,7 @@ public class AppConfig {
     @Bean
     public Map<JobType, Class> executors() {
         return new HashMap() {{
-            put(JobType.SIMPLE_JAR, SimpleJarExecutor.class);
+            put(JobType.SIMPLE_JAR, SimpleJarJobExecutor.class);
         }};
     }
 

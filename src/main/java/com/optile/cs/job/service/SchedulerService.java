@@ -25,7 +25,9 @@ public class SchedulerService {
         JobDetail jobDetail = this.getJobDetail(job);
 
         try {
-            schedulerFactoryBean.getScheduler().scheduleJob(jobDetail, getTrigger(jobDetail, job));
+            schedulerFactoryBean
+                    .getScheduler()
+                    .scheduleJob(jobDetail, getTrigger(jobDetail, job));
         } catch (SchedulerException schedulerException) {
             throw new AppException(AppErrorCode.ERROR_SCHEDULE_JOB);
         }
@@ -47,11 +49,17 @@ public class SchedulerService {
     }
 
     private JobDetail getJobDetail(Job job) {
-        return JobBuilder
+        JobDetail jobDetail = JobBuilder
                 .newJob()
                 .ofType(executors.get(job.getType()))
                 .storeDurably()
                 .withIdentity(job.getId())
                 .build();
+
+        jobDetail
+                .getJobDataMap()
+                .put("data", job);
+
+        return jobDetail;
     }
 }

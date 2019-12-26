@@ -12,14 +12,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import javax.validation.constraints.NotEmpty;
 import java.net.URI;
 import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("job")
-@Api(value="Job Management", description="Operations for creating and retrieving jobs" )
+@Api(value = "Job Management", description = "Operations for creating and retrieving jobs")
 public class JobController {
     @Autowired
     private JobService jobService;
@@ -31,7 +29,7 @@ public class JobController {
             @RequestParam("jobType") JobType jobType,
             @RequestParam(name = "priority", required = false) Integer priority,
             @RequestParam("executionType") ExecutionType executionType,
-            @RequestParam(name = "schedule", required = false) @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date date) {
+            @RequestParam(name = "schedule", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
 
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
