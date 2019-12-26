@@ -1,6 +1,6 @@
 package com.optile.cs.job.model;
 
-public enum ExecutionType {
+public enum JobExecutionType {
     IMMEDIATE,
     SCHEDULED
 }

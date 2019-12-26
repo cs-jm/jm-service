@@ -1,9 +1,9 @@
 package com.optile.cs.job.service;
 
-import com.optile.cs.error.AppException;
+import com.optile.cs.error.AppResponseException;
 import com.optile.cs.job.model.Job;
 import com.optile.cs.job.model.JobType;
-import com.optile.cs.job.util.ResponseErrorCode;
+import com.optile.cs.job.util.JobResponseErrorCode;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
@@ -28,7 +28,7 @@ public class SchedulerService {
                     .getScheduler()
                     .scheduleJob(jobDetail, getTrigger(jobDetail, job));
         } catch (SchedulerException schedulerException) {
-            throw new AppException(ResponseErrorCode.RESPONSE_ERROR_003);
+            throw new AppResponseException(JobResponseErrorCode.RESPONSE_ERROR_003);
         }
     }
 

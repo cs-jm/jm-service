@@ -1,7 +1,7 @@
 package com.optile.cs.job.service;
 
-import com.optile.cs.error.AppException;
-import com.optile.cs.job.util.ResponseErrorCode;
+import com.optile.cs.error.AppResponseException;
+import com.optile.cs.job.util.JobResponseErrorCode;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -27,14 +27,14 @@ public class StorageService {
 
     public String saveFile(MultipartFile file, String jobId) {
         if (file.isEmpty())
-            throw new AppException(ResponseErrorCode.RESPONSE_ERROR_001);
+            throw new AppResponseException(JobResponseErrorCode.RESPONSE_ERROR_001);
 
         String fileLocation = this.getJobStorePath(jobId, FilenameUtils.getExtension(file.getOriginalFilename()));
         try {
             Files.copy(file.getInputStream(), Paths.get(fileLocation),
-                    StandardCopyOption.REPLACE_EXISTING);
+                       StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            throw new AppException(ResponseErrorCode.RESPONSE_ERROR_002);
+            throw new AppResponseException(JobResponseErrorCode.RESPONSE_ERROR_002);
         }
 
         return fileLocation;

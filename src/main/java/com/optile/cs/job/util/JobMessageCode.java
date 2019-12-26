@@ -5,9 +5,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum MessageCode {
-    SUCCESSFUL_EXECUTION("Job execution successfully"),
-    FAILED_EXECUTION("Job execution failed");
+public enum JobMessageCode {
+    MESSAGE_001("Job execution successfully"),
+    MESSAGE_002("Job execution failed");
 
     private String message;
 }

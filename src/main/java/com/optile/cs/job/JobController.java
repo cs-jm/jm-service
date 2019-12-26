@@ -1,10 +1,11 @@
 package com.optile.cs.job;
 
-import com.optile.cs.job.model.ExecutionType;
 import com.optile.cs.job.model.Job;
+import com.optile.cs.job.model.JobExecutionType;
 import com.optile.cs.job.model.JobType;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.Date;
 
+@Log4j2
 @RestController
 @RequestMapping("job")
 @Api(value = "Job Management", description = "Operations for creating and retrieving jobs")
@@ -28,7 +30,7 @@ public class JobController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("jobType") JobType jobType,
             @RequestParam(name = "priority", required = false) Integer priority,
-            @RequestParam("executionType") ExecutionType executionType,
+            @RequestParam("executionType") JobExecutionType executionType,
             @RequestParam(name = "schedule", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
 
         URI uri = ServletUriComponentsBuilder

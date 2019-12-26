@@ -2,7 +2,8 @@ package com.optile.cs.error;
 
 import org.springframework.http.HttpStatus;
 
-public interface AppErrorCode {
+public interface AppResponseErrorCode {
     String getMessage();
+
     HttpStatus getHttpStatus();
 }

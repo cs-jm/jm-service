@@ -12,9 +12,9 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class Schedule {
+public class JobSchedule {
     @ApiModelProperty(notes = "Type of execution")
-    private ExecutionType executionType;
+    private JobExecutionType executionType;
     @ApiModelProperty(notes = "Scheduled date and time")
     private Date schedule;
 }

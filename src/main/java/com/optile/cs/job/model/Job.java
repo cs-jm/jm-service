@@ -19,6 +19,6 @@ public class Job {
     private String fileLocation;
     @ApiModelProperty(notes = "priority of job")
     private Integer priority;
-    @ApiModelProperty(notes = "Schedule of job")
-    private Schedule schedule;
+    @ApiModelProperty(notes = "JobSchedule of job")
+    private JobSchedule schedule;
 }
