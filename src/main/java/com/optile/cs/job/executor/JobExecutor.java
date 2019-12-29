@@ -7,16 +7,12 @@ import com.optile.cs.job.model.JobStatus;
 import com.optile.cs.job.util.JobMessageCode;
 import lombok.extern.log4j.Log4j2;
 import org.quartz.JobExecutionContext;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Log4j2
 @Component
 public abstract class JobExecutor implements org.quartz.Job {
-    protected Logger logger = LoggerFactory.getLogger(JobExecutor.class);
-
     @Autowired
     private JobRepository jobRepository;
 
@@ -33,16 +29,13 @@ public abstract class JobExecutor implements org.quartz.Job {
                 .getJobDataMap()
                 .get("data");
 
-        this.updateJobStatus(job.getId(), JobStatus.RUNNING);
-
         try {
             this.execute(job);
-            this.updateJobStatus(job.getId(), JobStatus.SUCCESS);
+            log.info(String.format("%s, %s", job.getId(), JobMessageCode.MESSAGE_001));
 
-            log.info(job.getId(), JobMessageCode.MESSAGE_001);
         } catch (JobProcessingException jobProcessingException) {
-            log.error(jobProcessingException.getJobId(), jobProcessingException.getJobMessageCode());
-            log.debug(jobProcessingException.getJobId(), jobProcessingException.getMessage());
+            log.error(String.format("%s, %s", jobProcessingException.getJobId(), jobProcessingException.getJobMessageCode()));
+            log.debug(String.format("%s, %s", jobProcessingException.getJobId(), jobProcessingException.getMessage()));
 
             this.updateJobStatus(job.getId(), JobStatus.FAILED);
         }

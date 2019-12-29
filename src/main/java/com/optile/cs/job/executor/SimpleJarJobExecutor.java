@@ -10,7 +10,7 @@ public class SimpleJarJobExecutor extends JobExecutor {
     @Override
     public void execute(Job job) throws JobProcessingException {
         try {
-            if (new ProcessBuilder().command("java", "-jar", job.getFileLocation()).start().waitFor() != 0)
+            if (new ProcessBuilder().command("java", "-jar", job.getFileLocation(), job.getId()).start().waitFor() != 0)
                 throw new JobProcessingException(job.getId(), JobMessageCode.MESSAGE_002);
         } catch (InterruptedException | IOException exception) {
             throw new JobProcessingException(job.getId(), JobMessageCode.MESSAGE_002, exception);

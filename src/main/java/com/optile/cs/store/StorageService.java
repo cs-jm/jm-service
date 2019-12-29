@@ -1,4 +1,4 @@
-package com.optile.cs.job.service;
+package com.optile.cs.store;
 
 import com.optile.cs.error.AppResponseException;
 import com.optile.cs.job.util.JobResponseErrorCode;
@@ -16,20 +16,24 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class StorageService {
 
-    @Value("${app.jobStore}")
-    private String jobStore;
+    @Value("${app.fileStore}")
+    private String fileStore;
 
     @PostConstruct
     private void setupStore() throws IOException {
-        if (!Files.isDirectory(Paths.get(jobStore)))
-            Files.createDirectories(Paths.get(jobStore));
+        if (!Files.isDirectory(Paths.get(fileStore)))
+            Files.createDirectories(Paths.get(fileStore));
     }
 
-    public String saveFile(MultipartFile file, String jobId) {
+    private String getJobStorePath(String fileName, String fileExtension) {
+        return fileStore + "/" + fileName + "." + fileExtension;
+    }
+
+    public String saveFile(MultipartFile file, String fileName) {
         if (file.isEmpty())
             throw new AppResponseException(JobResponseErrorCode.RESPONSE_ERROR_001);
 
-        String fileLocation = this.getJobStorePath(jobId, FilenameUtils.getExtension(file.getOriginalFilename()));
+        String fileLocation = this.getJobStorePath(fileName, FilenameUtils.getExtension(file.getOriginalFilename()));
         try {
             Files.copy(file.getInputStream(), Paths.get(fileLocation),
                        StandardCopyOption.REPLACE_EXISTING);
@@ -40,7 +44,4 @@ public class StorageService {
         return fileLocation;
     }
 
-    private String getJobStorePath(String jobId, String fileExtension) {
-        return jobStore + "/" + jobId + "." + fileExtension;
-    }
 }

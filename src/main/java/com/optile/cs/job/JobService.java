@@ -2,7 +2,7 @@ package com.optile.cs.job;
 
 import com.optile.cs.job.model.*;
 import com.optile.cs.job.service.SchedulerService;
-import com.optile.cs.job.service.StorageService;
+import com.optile.cs.store.StorageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;

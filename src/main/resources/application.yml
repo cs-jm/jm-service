@@ -5,19 +5,21 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  activemq:
+    in-memory: true
+    pool:
+      enable: false
 
 server:
   servlet:
     contextPath: /api
-    multipart:
-      max-file-size: 100MB
-      max-request-size: 100MB
+
 ---
 
 spring:
   profiles: dev
 app:
-  jobStore: ".store"
+  fileStore: ".store"
   db:
     name: job
     host: localhost
@@ -28,7 +30,7 @@ app:
 spring:
   profiles: prod
 app:
-  jobStore: ".store"
+  fileStore: ".store"
   db:
     name: job
 #    host: {ip}
