@@ -33,7 +33,7 @@ public class JobController {
             @RequestParam("executionType") JobExecutionType executionType,
             @RequestParam(name = "environmentString", required = false) String environmentString,
             @RequestParam(name = "schedule", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date,
-            @RequestParam("parameters") String parameters) {
+            @RequestParam(name = "parameters", required = false) String parameters) {
 
         URI uri = ServletUriComponentsBuilder
                .fromCurrentRequestUri()

@@ -30,10 +30,10 @@ public abstract class JobExecutor implements org.quartz.Job {
 
         try {
             this.execute(job);
-            log.info(String.format("%s, %s", job.getId(), JobMessageCode.MESSAGE_001));
+            log.info(String.format("%s, %s", job.getId(), JobMessageCode.MESSAGE_001.getMessage()));
 
         } catch (JobProcessingException jobProcessingException) {
-            log.error(String.format("%s, %s", jobProcessingException.getJobId(), jobProcessingException.getJobMessageCode()));
+            log.error(String.format("%s, %s", jobProcessingException.getJobId(), jobProcessingException.getJobMessageCode().getMessage()));
             log.debug(String.format("%s, %s", jobProcessingException.getJobId(), jobProcessingException.getMessage()));
 
             this.updateJobStatus(job.getId(), JobStatus.FAILED);
