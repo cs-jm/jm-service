@@ -31,14 +31,14 @@ public class JobController {
             @RequestParam("jobType") JobType jobType,
             @RequestParam(name = "priority", required = false) Integer priority,
             @RequestParam("executionType") JobExecutionType executionType,
-            @RequestParam(name = "schedule", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date) {
+            @RequestParam(name = "schedule", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date date,
+            @RequestParam("parameters") String parameters) {
 
         URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(jobService.submitJob(file, jobType, executionType, date, priority))
-                .toUri();
-
+               .fromCurrentRequestUri()
+               .path("/{id}")
+               .buildAndExpand(jobService.submitJob(file, jobType, executionType, date, priority, parameters))
+               .toUri();
         return ResponseEntity.created(uri).build();
     }
 

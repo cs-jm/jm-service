@@ -2,7 +2,7 @@ package com.optile.cs.config;
 
 import com.mongodb.client.MongoClients;
 import com.optile.cs.AppSetting;
-import com.optile.cs.job.executor.SimpleJarJobExecutor;
+import com.optile.cs.job.executor.SimpleBootJobExecutor;
 import com.optile.cs.job.model.JobType;
 import com.optile.cs.job.receiver.model.EventMessage;
 import com.optile.cs.job.receiver.model.StatusMessage;
@@ -51,7 +51,7 @@ public class AppConfig {
     @Bean
     public Map<JobType, Class> executors() {
         return new HashMap() {{
-            put(JobType.SIMPLE_JAR, SimpleJarJobExecutor.class);
+            put(JobType.SPRING_BOOT_JAR, SimpleBootJobExecutor.class);
         }};
     }
 

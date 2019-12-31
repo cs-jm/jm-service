@@ -21,4 +21,7 @@ public class Job {
     private Integer priority;
     @ApiModelProperty(notes = "JobSchedule of job")
     private JobSchedule schedule;
+    @ApiModelProperty(notes = "Parameters for the job")
+    private String parameters;
+
 }

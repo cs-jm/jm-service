@@ -6,11 +6,14 @@ import com.optile.cs.job.util.JobMessageCode;
 
 import java.io.IOException;
 
-public class SimpleJarJobExecutor extends JobExecutor {
+public class SimpleBootJobExecutor extends JobExecutor {
     @Override
     public void execute(Job job) throws JobProcessingException {
         try {
-            if (new ProcessBuilder().command("java", "-jar", job.getFileLocation(), job.getId()).start().waitFor() != 0)
+            if (Runtime
+                    .getRuntime()
+                    .exec(String.join(" ", "java", "-jar", job.getFileLocation(), job.getId(), job.getParameters()))
+                    .waitFor() != 0)
                 throw new JobProcessingException(job.getId(), JobMessageCode.MESSAGE_002);
         } catch (InterruptedException | IOException exception) {
             throw new JobProcessingException(job.getId(), JobMessageCode.MESSAGE_002, exception);

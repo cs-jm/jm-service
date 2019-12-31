@@ -23,7 +23,7 @@ public class JobService {
     @Autowired
     private JobRepository jobRepository;
 
-    public String submitJob(MultipartFile file, JobType jobType, JobExecutionType executionType, Date date, Integer priority) {
+    public String submitJob(MultipartFile file, JobType jobType, JobExecutionType executionType, Date date, Integer priority, String parameters) {
         String jobId = UUID.randomUUID().toString();
 
         Job job = Job
@@ -36,6 +36,7 @@ public class JobService {
                 .schedule(
                         new JobSchedule(executionType, date))
                 .priority(priority)
+                .parameters(parameters)
                 .build();
 
         schedulerService
