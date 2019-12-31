@@ -36,8 +36,10 @@ public class SchedulerService {
         TriggerBuilder triggerBuilder = TriggerBuilder
                 .newTrigger()
                 .forJob(jobDetail)
-                .withIdentity(job.getId())
-                .withPriority(job.getPriority());
+                .withIdentity(job.getId());
+
+        if(job.getPriority() != null)
+            triggerBuilder.withPriority(job.getPriority());
 
         switch (job.getSchedule().getExecutionType()) {
             case SCHEDULED:

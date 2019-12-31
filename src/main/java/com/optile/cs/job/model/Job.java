@@ -23,5 +23,6 @@ public class Job {
     private JobSchedule schedule;
     @ApiModelProperty(notes = "Parameters for the job")
     private String parameters;
-
+    @ApiModelProperty(notes = "Environment for the job")
+    private String environmentString;
 }

@@ -12,7 +12,7 @@ public class SimpleBootJobExecutor extends JobExecutor {
         try {
             if (Runtime
                     .getRuntime()
-                    .exec(String.join(" ", "java", "-jar", job.getFileLocation(), job.getId(), job.getParameters()))
+                    .exec(String.join(" ", "java", job.getEnvironmentString(), "-jar", job.getFileLocation(), job.getId(), job.getParameters()))
                     .waitFor() != 0)
                 throw new JobProcessingException(job.getId(), JobMessageCode.MESSAGE_002);
         } catch (InterruptedException | IOException exception) {
