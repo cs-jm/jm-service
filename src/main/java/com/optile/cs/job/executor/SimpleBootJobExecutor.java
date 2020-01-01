@@ -21,8 +21,8 @@ public class SimpleBootJobExecutor extends JobExecutor {
                     .exec(executionString)
                     .waitFor() != 0)
                 throw new JobProcessingException(job.getId(), JobMessageCode.MESSAGE_002);
-        } catch (InterruptedException InterruptedException) {
-            Thread.interrupted();
+        } catch (InterruptedException interruptedException) {
+            Thread.currentThread().interrupt();
         } catch (IOException exception) {
             throw new JobProcessingException(job.getId(), JobMessageCode.MESSAGE_002, exception);
         }

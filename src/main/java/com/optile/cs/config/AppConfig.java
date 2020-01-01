@@ -22,6 +22,7 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
 import java.io.IOException;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +66,7 @@ public class AppConfig {
 
     @Bean
     public Map<JobType, Class> executors() {
-        Map<JobType, Class> executors = new HashMap<>();
+        Map<JobType, Class> executors = new EnumMap<>(JobType.class);
 
         executors.put(
                 JobType.SPRING_BOOT_JAR,
