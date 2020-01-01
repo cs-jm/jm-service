@@ -2,11 +2,12 @@ package com.optile.cs.job.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
 
+@Data
 @Builder
-@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Job {
     @ApiModelProperty(notes = "The auto-generated job id")
@@ -25,4 +26,5 @@ public class Job {
     private String parameters;
     @ApiModelProperty(notes = "Environment for the job")
     private String environmentString;
+
 }

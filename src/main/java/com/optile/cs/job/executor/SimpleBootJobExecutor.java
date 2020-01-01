@@ -13,8 +13,8 @@ public class SimpleBootJobExecutor extends JobExecutor {
     public void execute(Job job) throws JobProcessingException {
         try {
             String executionString = Stream.of("java", job.getEnvironmentString(), "-jar", job.getFileLocation(), job.getId(), job.getParameters())
-                    .filter(token -> token != null && !token.isEmpty())
-                    .collect(Collectors.joining(" "));
+                                           .filter(token -> token != null && !token.isEmpty())
+                                           .collect(Collectors.joining(" "));
 
             if (Runtime
                     .getRuntime()
