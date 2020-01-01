@@ -6,5 +6,5 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public class AppResponseException extends RuntimeException {
-    private AppResponseErrorCode appResponseErrorCode;
+    private final AppResponseErrorCode appResponseErrorCode;
 }

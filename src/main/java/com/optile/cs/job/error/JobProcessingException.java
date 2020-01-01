@@ -5,8 +5,8 @@ import lombok.Getter;
 
 @Getter
 public class JobProcessingException extends Exception {
-    private String jobId;
-    private JobMessageCode jobMessageCode;
+    private final String jobId;
+    private final JobMessageCode jobMessageCode;
 
     public JobProcessingException(String jobId, JobMessageCode jobMessageCode, Exception exception) {
         super(exception);

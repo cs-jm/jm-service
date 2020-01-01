@@ -21,7 +21,7 @@ public class StorageService {
 
     @PostConstruct
     private void setupStore() throws IOException {
-        if (!Files.isDirectory(Paths.get(fileStore)))
+        if (!Paths.get(fileStore).toFile().isDirectory())
             Files.createDirectories(Paths.get(fileStore));
     }
 

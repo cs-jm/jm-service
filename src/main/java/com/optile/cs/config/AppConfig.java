@@ -31,11 +31,12 @@ public class AppConfig {
     private AppSetting appSetting;
 
     private void startDevMongoDBServer() throws IOException {
-        IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION)
+        IMongodConfig mongodbConfig = new MongodConfigBuilder()
+                .version(Version.Main.PRODUCTION)
                 .net(new Net(appSetting.getDb().getHost(), appSetting.getDb().getPort(), false))
                 .build();
 
-        MongodStarter.getDefaultInstance().prepare(mongodConfig).start();
+        MongodStarter.getDefaultInstance().prepare(mongodbConfig).start();
     }
 
     private MongoTemplate mongoTemplate() {
@@ -48,19 +49,36 @@ public class AppConfig {
                 , appSetting.getDb().getName());
     }
 
+    private Map<String, Class<?>> typeIds() {
+        Map<String, Class<?>> typeIds = new HashMap<>();
+
+        typeIds.put(
+                StatusMessage.class.getSimpleName(),
+                StatusMessage.class);
+
+        typeIds.put(
+                EventMessage.class.getSimpleName(),
+                EventMessage.class);
+
+        return typeIds;
+    }
+
     @Bean
     public Map<JobType, Class> executors() {
-        return new HashMap() {{
-            put(JobType.SPRING_BOOT_JAR, SimpleBootJobExecutor.class);
-        }};
+        Map<JobType, Class> executors = new HashMap<>();
+
+        executors.put(
+                JobType.SPRING_BOOT_JAR,
+                SimpleBootJobExecutor.class);
+
+        return executors;
     }
 
     @Bean
     @Profile("dev")
     public MongoTemplate devMongoTemplate() throws IOException {
         this.startDevMongoDBServer();
-        return
-                this.mongoTemplate();
+        return this.mongoTemplate();
     }
 
     @Bean
@@ -71,22 +89,22 @@ public class AppConfig {
 
     @Bean
     public BrokerService brokerService() throws Exception {
-        return new BrokerService() {{
-            addConnector("tcp://localhost:61616");
-            setPersistent(false);
-        }};
+        BrokerService brokerService = new BrokerService();
+
+        brokerService.addConnector("tcp://localhost:61616");
+        brokerService.setPersistent(false);
+
+        return brokerService;
     }
 
     @Bean
     public MessageConverter messageConverter() {
-        return new MappingJackson2MessageConverter() {{
-            setTargetType(MessageType.TEXT);
-            setTypeIdMappings(new HashMap() {{
-                put(StatusMessage.class.getSimpleName(), StatusMessage.class);
-                put(EventMessage.class.getSimpleName(), EventMessage.class);
-            }});
-            setTypeIdPropertyName("_type");
-        }};
-    }
+        MappingJackson2MessageConverter messageConverter = new MappingJackson2MessageConverter();
 
+        messageConverter.setTargetType(MessageType.TEXT);
+        messageConverter.setTypeIdMappings(typeIds());
+        messageConverter.setTypeIdPropertyName("_type");
+
+        return messageConverter;
+    }
 }

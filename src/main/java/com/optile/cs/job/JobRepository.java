@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -34,12 +35,18 @@ public class JobRepository {
     }
 
     public Job findByJobId(String id) {
-        return this.mongoTemplate
+        Job job = null;
+
+        Optional<Job> optionalJob = this.mongoTemplate
                 .find(Query.query(Criteria.where("job.id").is(id)), JobDocument.class)
                 .stream()
                 .map(JobDocument::getJob)
-                .findFirst()
-                .get();
+                .findFirst();
+
+        if (optionalJob.isPresent())
+            job = optionalJob.get();
+
+        return job;
     }
 
     public List<Job> findAllJobs() {

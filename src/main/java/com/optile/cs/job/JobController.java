@@ -19,7 +19,7 @@ import java.util.Date;
 @Log4j2
 @RestController
 @RequestMapping("job")
-@Api(value = "Job Management", description = "Operations for creating and retrieving jobs")
+@Api(value = "Job Management",  tags = "Submit/Retrieve Job Operations")
 public class JobController {
     @Autowired
     private JobService jobService;
