@@ -4,6 +4,7 @@ import com.optile.cs.job.model.JobExecutionType;
 import com.optile.cs.job.model.JobType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.client.MultipartBodyBuilder;
@@ -12,6 +13,7 @@ import org.springframework.web.reactive.function.BodyInserters;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class SubmitJobTest {
@@ -19,9 +21,9 @@ class SubmitJobTest {
     @Autowired
     private WebTestClient webTestClient;
 
-    private File getFile(){
+    private byte[] getFile(){
         try {
-            return new ClassPathResource("jm-job-logger-1.0.jar").getFile();
+            return Files.readAllBytes(new ClassPathResource("jm-job-logger-1.0.jar").getFile().toPath());
         } catch (IOException e) {
             return null;
         }
@@ -44,8 +46,6 @@ class SubmitJobTest {
                 .exchange()
                 .expectStatus()
                 .isCreated();
-
-
     }
 
 }

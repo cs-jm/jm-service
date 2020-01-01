@@ -6,6 +6,7 @@ import com.optile.cs.job.executor.SimpleBootJobExecutor;
 import com.optile.cs.job.model.JobType;
 import com.optile.cs.job.receiver.model.EventMessage;
 import com.optile.cs.job.receiver.model.StatusMessage;
+import de.flapdoodle.embed.mongo.MongodExecutable;
 import de.flapdoodle.embed.mongo.MongodStarter;
 import de.flapdoodle.embed.mongo.config.IMongodConfig;
 import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
@@ -31,13 +32,19 @@ public class AppConfig {
     @Autowired
     private AppSetting appSetting;
 
+    private MongodExecutable mongodExecutable;
+
     private void startDevMongoDBServer() throws IOException {
         IMongodConfig mongodbConfig = new MongodConfigBuilder()
                 .version(Version.Main.PRODUCTION)
                 .net(new Net(appSetting.getDb().getHost(), appSetting.getDb().getPort(), false))
                 .build();
 
-        MongodStarter.getDefaultInstance().prepare(mongodbConfig).start();
+        MongodExecutable mongodExecutable = MongodStarter
+                .getDefaultInstance()
+                .prepare(mongodbConfig);
+
+        mongodExecutable.start();
     }
 
     private MongoTemplate mongoTemplate() {
