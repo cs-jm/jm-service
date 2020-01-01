@@ -36,10 +36,10 @@ public class JobController {
             @RequestParam(name = "parameters", required = false) String parameters) {
 
         URI uri = ServletUriComponentsBuilder
-               .fromCurrentRequestUri()
-               .path("/{id}")
-               .buildAndExpand(jobService.submitJob(file, jobType, executionType, date, priority, parameters, environmentString))
-               .toUri();
+                .fromCurrentRequestUri()
+                .path("/{id}")
+                .buildAndExpand(jobService.submitJob(file, jobType, executionType, date, priority, parameters, environmentString))
+                .toUri();
         return ResponseEntity.created(uri).build();
     }
 

@@ -36,7 +36,7 @@ public class StorageService {
         String fileLocation = this.getJobStorePath(fileName, FilenameUtils.getExtension(file.getOriginalFilename()));
         try {
             Files.copy(file.getInputStream(), Paths.get(fileLocation),
-                       StandardCopyOption.REPLACE_EXISTING);
+                    StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             throw new AppResponseException(JobResponseErrorCode.RESPONSE_ERROR_002);
         }

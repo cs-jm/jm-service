@@ -38,7 +38,7 @@ public class SchedulerService {
                 .forJob(jobDetail)
                 .withIdentity(job.getId());
 
-        if(job.getPriority() != null)
+        if (job.getPriority() != null)
             triggerBuilder.withPriority(job.getPriority());
 
         switch (job.getSchedule().getExecutionType()) {

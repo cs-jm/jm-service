@@ -32,8 +32,8 @@ public class AppConfig {
 
     private void startDevMongoDBServer() throws IOException {
         IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION)
-                                                              .net(new Net(appSetting.getDb().getHost(), appSetting.getDb().getPort(), false))
-                                                              .build();
+                .net(new Net(appSetting.getDb().getHost(), appSetting.getDb().getPort(), false))
+                .build();
 
         MongodStarter.getDefaultInstance().prepare(mongodConfig).start();
     }
@@ -71,7 +71,7 @@ public class AppConfig {
 
     @Bean
     public BrokerService brokerService() throws Exception {
-        return new BrokerService(){{
+        return new BrokerService() {{
             addConnector("tcp://localhost:61616");
             setPersistent(false);
         }};
@@ -79,9 +79,9 @@ public class AppConfig {
 
     @Bean
     public MessageConverter messageConverter() {
-        return new MappingJackson2MessageConverter(){{
+        return new MappingJackson2MessageConverter() {{
             setTargetType(MessageType.TEXT);
-            setTypeIdMappings(new HashMap(){{
+            setTypeIdMappings(new HashMap() {{
                 put(StatusMessage.class.getSimpleName(), StatusMessage.class);
                 put(EventMessage.class.getSimpleName(), EventMessage.class);
             }});
