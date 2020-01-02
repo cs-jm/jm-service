@@ -2,6 +2,8 @@
 
 ### Project Architecture
 
+![Archtecture](https://github.com/CaseStudy-JobManagement/jm-service/tree/master/src/main/resources/doc/architecture.png)
+
 ### Project Modules
 The project consists of following modules:
 * [Job Management Service](https://github.com/CaseStudy-JobManagement/jm-service) : spring boot service for submitting and retrieving jobs, with following features.
