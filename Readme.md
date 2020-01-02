@@ -4,6 +4,26 @@
 
 ![Archtecture](./src/main/resources/doc/architecture.png)
 
+* Job Submission
+    * 1,1 : User posts a job with job file and other request parameters.
+    * 1,2 : Job controller propagates request to job services.
+    * 1,3 : Job service validates the request, and schedules the job for execution.
+    * 1,4 & 1.5 : Job service  saves the job details to db with job status as 'QUEUED'.
+    * 1,6 : Job scheduler triggers the specific job executor based on job type.
+    * 1.7 : The job executor executes the job.
+    * 1.8 : Job status/event updates are pushed by the job to message queue.
+    * 1.9 & 1.10 : message receiver updates the job status in repository with 'RUNNING | FAILED | SUCCESS'.   
+
+* Job Retrieve Job By Id 
+    * 2,1 : User requests a job details with job id.
+    * 2,2 : Job controller propagates request to job services.   
+    * 2,3 & 2,3 & 2,4 : Job service then retrieves the job details from db and returns the same as response.   
+    
+* Job Retrieve All Jobs
+    * 3,1 : User requests for all jobs.
+    * 3,2 : Job controller propagates request to job services.   
+    * 3,3 & 3,3 & 3,4 : Job service then retrieves all job details from db and returns the same as response. 
+     
 ### Project Modules
 The project consists of following modules:
 * [Job Management Service](https://github.com/CaseStudy-JobManagement/jm-service) : spring boot service for submitting and retrieving jobs, with following features.
