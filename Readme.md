@@ -1,7 +1,7 @@
 # Getting Started
 
 ### Live At :  https://jm-service.herokuapp.com/api/swagger-ui.html 
-
+***Note : app is hosted on free dyno, which sleeps if no traffic is received for 30 min, please wait for dyno to awake on first request***
 ### Project Architecture
 
 ![Architecture](./src/main/resources/doc/architecture.png)
