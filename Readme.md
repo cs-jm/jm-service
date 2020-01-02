@@ -52,7 +52,69 @@ The project consists of following modules:
     * **Run It** : *java -jar target\jm-service-0.0.1-SNAPSHOT.jar*
     * **Test Via API Swagger** http://localhost:8080/api/swagger-ui.html
 
-### Dev Operations
+### Testing
+
+**API Usage**
+ * Job Submission 
+     * Request URL : http://localhost:8080/api/job
+     * Request Body:
+        ```
+        form : {job}.jar
+        jobType : SPRING_BOOT_JAR
+        executionType : IMMEDIATE
+        parameters : 'optional, space seperated parameter for job'
+        environmentString : 'optional, space seperated environment variable for job'
+        priority : 'optional, int value representing job priority (1-10)' 
+        schedule : 'optional, schedule represented in 'yyyy-MM-dd HH:mm:ss' format' 
+        ```
+     * Response Header:
+        ```
+        Location : http://localhost:8080/api/job/{jobId} 
+        ```
+     * Response Status:
+        ```
+        201
+        ```
+ * Get Job By Id
+     * Request URL : http://localhost:8080/api/job/{jobId} 
+     * Response Body:
+        ```
+        {
+          "id": {jobId},
+          "type": "SPRING_BOOT_JAR",
+          "status": "{QUEUED | FAILED | SUCCESS}",
+          "fileLocation": ".store/{jobId}.jar",
+          "schedule": {
+            "executionType": "IMMEDIATE"
+          }
+        }
+        ```
+     * Response Status:
+        ```
+        200
+        ```
+  * Get All Jobs 
+      * Request URL : http://localhost:8080/api/job/ 
+      * Response Body:
+         ```
+         [
+             {
+               "id": {jobId},
+               "type": "SPRING_BOOT_JAR",
+               "status": "{QUEUED | FAILED | SUCCESS}",
+               "fileLocation": ".store/{jobId}.jar",
+               "schedule": {
+                 "executionType": "IMMEDIATE"
+               }
+             }
+             ...
+         ]
+         ```
+      * Response Status:
+         ```
+         200
+         ```                 
+### Development Operations
 [Job Management Service Travis CI Build](https://travis-ci.org/CaseStudy-JobManagement/jm-service)
 : Have integrated code repo with Travis CI which builds the app does following :
 
