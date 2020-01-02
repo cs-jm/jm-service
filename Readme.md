@@ -2,7 +2,7 @@
 
 ### Project Architecture
 
-![Archtecture](https://github.com/CaseStudy-JobManagement/jm-service/tree/master/src/main/resources/doc/architecture.png)
+![Archtecture](./src/main/resources/doc/architecture.png)
 
 ### Project Modules
 The project consists of following modules:
