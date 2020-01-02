@@ -1,13 +1,15 @@
 # Getting Started
 
+###Live At :  https://jm-service.herokuapp.com/api/swagger-ui.html 
+
 ### Project Architecture
 
-![Archtecture](./src/main/resources/doc/architecture.png)
+![Architecture](./src/main/resources/doc/architecture.png)
 
 * Job Submission
     * 1,1 : User posts a job with job file and other request parameters.
     * 1,2 : Job controller propagates request to job services.
-    * 1,3 : Job service validates the request, and schedules the job for execution.
+    * 1,3 : Job service validates the request, saves the file and schedules the job for execution.
     * 1,4 & 1.5 : Job service  saves the job details to db with job status as 'QUEUED'.
     * 1,6 : Job scheduler triggers the specific job executor based on job type.
     * 1.7 : The job executor executes the job.
@@ -33,8 +35,13 @@ The project consists of following modules:
 * Job Modules
     * [Job Starter](https://github.com/CaseStudy-JobManagement/jm-job-starter) : spring boot starter job for creating jobs. 
     * [Job Logger](https://github.com/CaseStudy-JobManagement/jm-job-logger) : simple job which logs 'Hello'. 
-    * [Job Weather Report Dweet](https://github.com/CaseStudy-JobManagement/jm-job-weather-report-dweet) : retrieves the weather report for specified city from 'openweathermap' API's and push the same to dweet thing service. 
-    * [Job Weather Report Email](https://github.com/CaseStudy-JobManagement/jm-job-weather-report-email) : retrieves the weather report for specified city from 'openweathermap' API's and emails the same to specified mail id.
+    * [Job Weather Report Dweet](https://github.com/CaseStudy-JobManagement/jm-job-weather-report-dweet) : 
+        * Retrieves the weather report for specified city from 'openweathermap' API's. 
+        * Push the same to dweet thing service. 
+        * The data can be viewed at freeboard : https://freeboard.io/board/7cqslZ 
+    * [Job Weather Report Email](https://github.com/CaseStudy-JobManagement/jm-job-weather-report-email) : 
+        * Retrieves the weather report for specified city from 'openweathermap' API's 
+        * Emails the same to mail id specified in parameter.
 
 ### Build & Run
 * Build [Job Starter](https://github.com/CaseStudy-JobManagement/jm-job-starter) : job starter is to be built before building any job.
@@ -52,9 +59,7 @@ The project consists of following modules:
     * **Run It** : *java -jar target\jm-service-0.0.1-SNAPSHOT.jar*
     * **Test Via API Swagger** http://localhost:8080/api/swagger-ui.html
 
-### Testing
-
-**API Usage**
+###API Usage
  * Job Submission 
      * Request URL : http://localhost:8080/api/job
      * Request Body:
@@ -113,7 +118,46 @@ The project consists of following modules:
       * Response Status:
          ```
          200
-         ```                 
+         ```                
+
+### Running jobs
+* Built jars are available at : https://github.com/CaseStudy-JobManagement/jm-service/releases/tag/1.0
+* Running Logger Jobs   
+    * On Live / On Local
+        * Request Body:
+           ```
+           form : {job}.jar
+           jobType : SPRING_BOOT_JAR
+           executionType : IMMEDIATE
+           ```      
+* Running Email Jobs   
+    * On Live Only
+        * Request Body:
+           ```
+           form : {job}.jar
+           jobType : SPRING_BOOT_JAR
+           executionType : IMMEDIATE
+           parameter : {city} {mailid} ex :'bangalore anant.c.pawar@gmail.com'
+           ```     
+* Running Dweet Jobs   
+    * On Live 
+        * Request Body:
+           ```
+           form : {job}.jar
+           jobType : SPRING_BOOT_JAR
+           executionType : IMMEDIATE
+           parameter : {city} ex : 'bangalore'
+           ```     
+     * On Local 
+         * Request Body:
+            ```
+            form : {job}.jar
+            jobType : SPRING_BOOT_JAR
+            executionType : IMMEDIATE
+            parameter : {city} ex : 'bangalore'
+            environmentString: -DWEATHER_APP_KEY=fce6cd92d51667ad4e8eae6ae2d4fb3c
+            ```       
+                                     
 ### Development Operations
 [Job Management Service Travis CI Build](https://travis-ci.org/CaseStudy-JobManagement/jm-service)
 : Have integrated code repo with Travis CI which builds the app does following :
