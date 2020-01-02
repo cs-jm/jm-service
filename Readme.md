@@ -1,6 +1,6 @@
 # Getting Started
 
-###Live At :  https://jm-service.herokuapp.com/api/swagger-ui.html 
+### Live At :  https://jm-service.herokuapp.com/api/swagger-ui.html 
 
 ### Project Architecture
 
@@ -59,7 +59,7 @@ The project consists of following modules:
     * **Run It** : *java -jar target\jm-service-0.0.1-SNAPSHOT.jar*
     * **Test Via API Swagger** http://localhost:8080/api/swagger-ui.html
 
-###API Usage
+### API Usage
  * Job Submission 
      * Request URL : http://localhost:8080/api/job
      * Request Body:
@@ -99,7 +99,7 @@ The project consists of following modules:
         200
         ```
   * Get All Jobs 
-      * Request URL : http://localhost:8080/api/job/ 
+      * Request URL : http://localhost:8080/api/job
       * Response Body:
          ```
          [
