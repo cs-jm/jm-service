@@ -84,11 +84,9 @@ public class RetrieveJobTest {
                                           .expectStatus()
                                           .isOk()
                                           .expectBodyList(Job.class)
-                                          .hasSize(1)
                                           .returnResult()
                                           .getResponseBody()
                         , CoreMatchers.hasItem(job));
-
 
     }
 }
