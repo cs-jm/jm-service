@@ -18,7 +18,6 @@ class SubmitJobTest {
 
     @Test
     public void testSubmitJob() {
-
         webTestClient.post()
                      .uri("api/job")
                      .body(BodyInserters.fromMultipartData(testHelper.submitJobRequestData().build()))
@@ -29,7 +28,6 @@ class SubmitJobTest {
 
     @Test
     public void testSubmitJob_MissingJobFile() {
-
         webTestClient.post()
                      .uri("api/job")
                      .body(BodyInserters.fromMultipartData(testHelper.submitJobRequestData_MissingJobFile().build()))
