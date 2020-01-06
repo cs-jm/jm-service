@@ -32,19 +32,15 @@ public class AppConfig {
     @Autowired
     private AppSetting appSetting;
 
-    private MongodExecutable mongodExecutable;
-
     private void startDevMongoDBServer() throws IOException {
         IMongodConfig mongodbConfig = new MongodConfigBuilder()
                 .version(Version.Main.PRODUCTION)
                 .net(new Net(appSetting.getDb().getHost(), appSetting.getDb().getPort(), false))
                 .build();
 
-        MongodExecutable mongodExecutable = MongodStarter
+         MongodStarter
                 .getDefaultInstance()
-                .prepare(mongodbConfig);
-
-        mongodExecutable.start();
+                .prepare(mongodbConfig).start();
     }
 
     private MongoTemplate mongoTemplate() {
